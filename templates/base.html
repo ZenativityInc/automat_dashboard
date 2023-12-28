@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link href="{% static 'styles.css' %}" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'bootstrap-4.6.2-dist/css/bootstrap.min.css' %}" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+   {% block scripts %}
+{{ block.super }}
+    <script>
+        function resetForm() {
+        document.getElementById("my-form").reset();
+      }
+
+      $(document).ready(function(){
+        $("#refresh-button").click(function(){
+          resetForm();
+          location.reload();
+        });
+
+        // Toggle image and fullscreen modes
+        $(".chart-img").click(function() {
+            var chartSrc = $(this).attr("src");
+            var modal = '<div class="modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-xl modal-dialog-centered" role="document"><img src="' + chartSrc + '" class="modal-content img-fluid"></div></div>';
+            $("body").append(modal);
+            $(".modal").modal("show");
+            $(".modal").on("hidden.bs.modal", function () {
+                $(this).remove();
+            });
+        });
+    });
+</script>
+{% endblock scripts %}
+
+      <title>GUI App | {% block title %}{% endblock title %}</title>
+  </head>
+
+  <body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#"
+        ><img src="{% static '/media/logo.png' %}" alt="logo" height="60"
+      /></a>
+
+    </nav>
+
+    <div class="row"></div>
+
+    <div class="container-fluid mb-3 mt-3">
+      {% block content %}{% endblock content %}
+    </div>
+
+    <footer class="py-4 bg-light mt-auto">
+      <div class="container-fluid px-4">
+        <div class="d-flex align-items-center justify-content-between small">
+          <div class="text-muted">Automat &copy; {% now 'Y' %}</div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'popper.min.js' %}"></script>
+    <script src="{% static 'bootstrap-4.6.2-dist/js/bootstrap.min.js' %}"></script>
+  </body>
+</html>
